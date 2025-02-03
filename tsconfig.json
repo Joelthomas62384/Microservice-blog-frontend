@@ -15,13 +15,14 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next"
+        "name": "next",
+        
       }
     ],
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","editorjs-simple-image.d.ts",],
   "exclude": ["node_modules"]
 }

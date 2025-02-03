@@ -6,6 +6,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar"
 import { useAuth } from "@/context"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import axiosInstance from "@/axios"
+
 
 
 const Logo = () => (
@@ -15,7 +25,17 @@ const Logo = () => (
 )
 
 export function Navbar() {
-  const { user } = useAuth()
+  const { userLoggedIn  ,user  ,loginModalToggle,logout} = useAuth()
+
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post('/api/auth/logout')
+      logout()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   return (
     <nav className="flex items-center justify-between p-4 bg-background">
@@ -29,13 +49,7 @@ export function Navbar() {
             </Link>
           </MenubarTrigger>
         </MenubarMenu>
-        <MenubarMenu>
-          <MenubarTrigger asChild>
-            <Link href="/about" className="cursor-pointer hover:text-primary transition-colors">
-              About
-            </Link>
-          </MenubarTrigger>
-        </MenubarMenu>
+
         <MenubarMenu>
           <MenubarTrigger asChild>
             <Link href="/blogs" className="cursor-pointer hover:text-primary transition-colors">
@@ -46,20 +60,53 @@ export function Navbar() {
       </Menubar>
 
       <div className="flex items-center gap-4">
-        <Link href={user ? "/profile" : "/login"}>
-          <Avatar className="hover:ring-2 ring-primary transition-all cursor-pointer">
-            <AvatarImage src={user?.user_image} alt="User" />
-            <AvatarFallback>
-              <User className="h-5 w-5" />
-            </AvatarFallback>
-          </Avatar>
-        </Link>
+        {
+
+          userLoggedIn ? ( 
+        // 
+
+        <>
+        <DropdownMenu>
+  <DropdownMenuTrigger  className="focus:outline-none focus:ring-0"> 
+ 
+    <Avatar className="hover:ring-2 ring-primary transition-all cursor-pointer">
+      <AvatarImage src={user?.user_image} alt="User" />
+      <AvatarFallback>
+        <User className="h-5 w-5" />
+      </AvatarFallback>
+    </Avatar>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem asChild>
+    <Link href={ "/profile" }>
+           Profile
+         </Link>
+    </DropdownMenuItem>
+   
+    <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+
+        </>
         
-        <Link href="/create">
+      ) : 
+        (
+          <Button onClick={loginModalToggle}>Login</Button>
+        )
+
+        }
+        
+       {
+        userLoggedIn  && (
+          <Link href="/create">
           <Button size="icon" className="hover:bg-primary/90 transition-colors">
             <Plus className="h-4 w-4" />
           </Button>
         </Link>
+        )
+       }
       </div>
     </nav>
   )

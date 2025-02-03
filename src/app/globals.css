@@ -69,4 +69,72 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  /* styles/editor-styles.css */
+.editorjs-container {
+  /* Match Tailwind's prose class for text styling */
+  @apply prose prose-sm max-w-none;
+}
+
+/* Toolbar */
+.ce-toolbar {
+  @apply border-gray-200 bg-gray-50 rounded-t-lg !important;
+}
+
+.ce-toolbar__content {
+  @apply max-w-3xl mx-auto !important;
+}
+
+.ce-toolbar__plus, 
+.ce-toolbar__settings-btn {
+  @apply text-gray-600 hover:bg-gray-100 !important;
+}
+
+/* Blocks */
+.cdx-block {
+  @apply px-2 py-1;
+}
+
+/* Inputs */
+.ce-block__content,
+.ce-toolbar__plus {
+  @apply max-w-3xl mx-auto !important;
+}
+
+.cdx-input {
+  @apply border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 !important;
+}
+
+/* Image Tool */
+.simple-image-input {
+  @apply border-gray-300 rounded-md px-3 py-2 focus:border-indigo-500 focus:ring-indigo-500 !important;
+}
+
+.simple-image-btn {
+  @apply bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 !important;
+}
+
+/* Code Tool */
+.cdx-code {
+  @apply bg-gray-100 p-4 rounded-md font-mono text-sm !important;
+}
+
+/* List Tool */
+.cdx-list__item {
+  @apply pl-4;
+}
+
+.dark .editorjs-container {
+  @apply prose-invert;
+}
+
+.dark .cdx-code {
+  @apply bg-gray-800 text-gray-100;
+}
+
+.dark .ce-toolbar {
+  @apply border-gray-700 bg-gray-800;
+}
+.ce-popover .ce-popover--opened{
+  @apply bg-gray-800 text-gray-100;
+}
 }
